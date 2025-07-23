@@ -1,0 +1,19 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block content %}
+  <div style="max-width: 500px; margin-top: 40px; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+    <h1 style="margin-bottom: 20px;">Сбор участников</h1>
+
+    <form method="post">{% csrf_token %}
+      <div style="margin-bottom: 20px;">
+        {{ form.group.label_tag }}
+        <br>
+        {{ form.group }}
+      </div>
+
+      <button type="submit" class="button btn btn-success">Собрать</button>
+      <a href="/admin/account/account/" style="margin-left: 10px;">⬅ Назад к аккаунтам</a>
+    </form>
+  </div>
+{% endblock %}

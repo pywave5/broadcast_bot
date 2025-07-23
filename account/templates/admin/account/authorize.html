@@ -1,0 +1,34 @@
+{% extends "admin/base_site.html" %}
+
+{% block extrastyle %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-3">Авторизация Telegram: <span class="text-danger">{{ account.phone_number }}</span></h2>
+
+  <form method="post">
+    {% csrf_token %}
+
+    {% if step == "password" %}
+      <div class="mb-3">
+        <label for="password" class="form-label">Пароль 2FA</label>
+        <input type="password" name="password" id="password" class="form-control" required autofocus>
+      </div>
+      <button type="submit" name="action" value="submit_password" class="btn btn-success">Завершить вход</button>
+
+    {% elif code_sent %}
+      <div class="mb-3">
+        <label for="code" class="form-label">Код из Telegram</label>
+        <input type="text" name="code" id="code" class="form-control" placeholder="Введите код" required autofocus>
+      </div>
+      <button type="submit" name="action" value="submit_code" class="btn btn-success">Авторизоваться</button>
+      <a href="?reset=1" class="btn btn-warning ms-2">Отправить код заново</a>
+
+    {% else %}
+      <button type="submit" name="action" value="get_code" class="btn btn-primary">Получить код</button>
+    {% endif %}
+  </form>
+</div>
+{% endblock %}
